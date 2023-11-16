@@ -24,3 +24,4 @@ class Menu(MenuBase):
 
     class ConfigDict:
         from_attributes = True
+        
