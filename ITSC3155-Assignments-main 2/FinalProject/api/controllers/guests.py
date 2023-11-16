@@ -4,7 +4,7 @@ from ..models import guests as model
 from sqlalchemy.exc import SQLAlchemyError
 
 
-def create_guest(db: Session, request):
+def create(db: Session, request):
     new_guest = model.Guest(
         name=request.name,
         payment_id=request.payment_id,
@@ -25,7 +25,7 @@ def create_guest(db: Session, request):
     return new_guest
 
 
-def read_all_guests(db: Session):
+def read_all(db: Session):
     try:
         result = db.query(model.Guest).all()
     except SQLAlchemyError as e:
@@ -34,7 +34,7 @@ def read_all_guests(db: Session):
     return result
 
 
-def read_one_guest(db: Session, guest_id):
+def read_one(db: Session, guest_id):
     try:
         guest = db.query(model.Guest).filter(model.Guest.id == guest_id).first()
         if not guest:
@@ -45,7 +45,7 @@ def read_one_guest(db: Session, guest_id):
     return guest
 
 
-def update_guest(db: Session, guest_id, request):
+def update(db: Session, guest_id, request):
     try:
         guest = db.query(model.Guest).filter(model.Guest.id == guest_id)
         if not guest.first():
@@ -59,7 +59,7 @@ def update_guest(db: Session, guest_id, request):
     return guest.first()
 
 
-def delete_guest(db: Session, guest_id):
+def delete(db: Session, guest_id):
     try:
         guest = db.query(model.Guest).filter(model.Guest.id == guest_id)
         if not guest.first():
