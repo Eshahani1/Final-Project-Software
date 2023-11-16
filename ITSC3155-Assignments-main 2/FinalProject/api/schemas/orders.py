@@ -6,8 +6,11 @@ from .order_details import OrderDetail
 
 
 class OrderBase(BaseModel):
-    customer_name: str
-    description: Optional[str] = None
+    guest_name: str
+    order_date: str
+    order_details_id: int
+    tracking_nums: int
+    status: str
 
 
 class OrderCreate(OrderBase):
@@ -15,14 +18,14 @@ class OrderCreate(OrderBase):
 
 
 class OrderUpdate(BaseModel):
-    customer_name: Optional[str] = None
-    description: Optional[str] = None
-
+    guest_name: Optional[str] = None
+    order_date: Optional[str] = None
+    order_details_id: Optional[str] = None
+    tracking_nums: Optional[str] = None
+    status: Optional[str] = None
 
 class Order(OrderBase):
     id: int
-    order_date: Optional[datetime] = None
-    order_details: list[OrderDetail] = None
 
     class ConfigDict:
         from_attributes = True
