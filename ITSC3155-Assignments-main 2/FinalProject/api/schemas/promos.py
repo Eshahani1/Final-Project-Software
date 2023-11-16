@@ -7,7 +7,7 @@ from .promos import Promo
 class PromoBase(BaseModel):
     code: str
     menu_id: int
-    discount: int
+    discount: float
 
 
 class PromoCreate(PromoBase):
@@ -17,13 +17,14 @@ class PromoCreate(PromoBase):
 class PromoUpdate(PromoBase):
     code: Optional[str] = None
     menu_id: Optional[int] = None
-    discount: Optional[int] = None
+    discount: Optional[float] = None
 
 
 class Promo(PromoBase):
+    id: int
     code: str
     menu_id: int
-    discount: int
+    discount: float
 
     class ConfigDict:
         from_attributes = True
