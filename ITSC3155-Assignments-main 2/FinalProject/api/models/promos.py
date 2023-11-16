@@ -12,4 +12,4 @@ class Promo(Base):
     menu_id = Column(Integer, ForeignKey("menu.id"))
     discount = Column(Float)
 
-    menu_item = relationship("Item", back_populates="menu")
+    menu_item = relationship("Item", back_populates="promos")
