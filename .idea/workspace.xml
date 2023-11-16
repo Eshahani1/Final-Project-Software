@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1e67271-e571-46ba-bea5-3ecf047bc552" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Final-Project-Software.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Final-Project-Software.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ITSC3155-Assignments-main 2/FinalProject/api/dependencies/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/ITSC3155-Assignments-main 2/FinalProject/api/dependencies/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ITSC3155-Assignments-main 2/FinalProject/api/models/model_loader.py" beforeDir="false" afterPath="$PROJECT_DIR$/ITSC3155-Assignments-main 2/FinalProject/api/models/model_loader.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ITSC3155-Assignments-main 2/FinalProject/api/models/payments.py" beforeDir="false" afterPath="$PROJECT_DIR$/ITSC3155-Assignments-main 2/FinalProject/api/models/payments.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ITSC3155-Assignments-main 2/FinalProject/api/models/guests.py" beforeDir="false" afterPath="$PROJECT_DIR$/ITSC3155-Assignments-main 2/FinalProject/api/models/guests.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,21 +34,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/eyaan/Desktop/Final-Project-Software",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/eyaan/Desktop/Final-Project-Software&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="pip install fastapi" />
@@ -100,7 +96,7 @@
       <updated>1699945013391</updated>
       <workItem from="1699945014475" duration="4527000" />
       <workItem from="1700088896258" duration="1471000" />
-      <workItem from="1700167880370" duration="2259000" />
+      <workItem from="1700167880370" duration="2508000" />
     </task>
     <servers />
   </component>
