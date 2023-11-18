@@ -6,7 +6,7 @@ from .resources import Resource
 
 class MenuItemBase(BaseModel):
     item: str
-    price: int
+    price: float
     calories: int
 
 
