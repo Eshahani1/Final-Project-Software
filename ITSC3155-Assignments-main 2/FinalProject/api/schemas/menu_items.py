@@ -4,19 +4,19 @@ from pydantic import BaseModel
 from .resources import Resource
 
 
-class MenuBase(BaseModel):
+class MenuItemBase(BaseModel):
     item: str
     price: int
     calories: int
 
 
-class MenuCreate(MenuBase):
+class MenuItemCreate(MenuItemBase):
     pass
 
-class MenuUpdate(BaseModel):
+class MenuItemUpdate(BaseModel):
     menu_id: Optional[int] = None
 
-class Menu(MenuBase):
+class MenuItem(MenuItemBase):
     id: int
 
 
