@@ -8,8 +8,6 @@ def create(db: Session, request):
     new_guest = model.Guest(
         name=request.name,
         payment_id=request.payment_id,
-        order_id=request.order_id,
-        promo_id=request.promo_id,
         phone_number=request.phone_number,
         address=request.address
     )

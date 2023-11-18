@@ -9,6 +9,7 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     order_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
+    guest_id = Column(Integer, ForeignKey("guest.id"))
     tracking_nums = Column(Integer, unique=True, nullable=False)
     status = Column(String(10))
 

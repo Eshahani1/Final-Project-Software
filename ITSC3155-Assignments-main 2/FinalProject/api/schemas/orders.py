@@ -6,16 +6,16 @@ from .order_details import OrderDetail
 
 
 class OrderBase(BaseModel):
-    guest_name: str
     tracking_nums: int
     status: str
 
 
 class OrderCreate(OrderBase):
-    pass
+   guest_id: int
 
 
 class OrderUpdate(BaseModel):
+    guest_id: Optional[int] = None
     status: Optional[str] = None
 
 class Order(OrderBase):

@@ -1,11 +1,9 @@
 from typing import Optional
 from pydantic import BaseModel
+from .orders import Order
 
 class GuestBase(BaseModel):
     name: str
-    payment_id: int
-    order_id: int
-    promo_id: int
     phone_number: str
     address: str
 
@@ -14,14 +12,13 @@ class GuestCreate(GuestBase):
 
 class GuestUpdate(BaseModel):
     name: Optional[str] = None
-    payment_id: Optional[int] = None
     order_id: Optional[int] = None
-    promo_id: Optional[int] = None
     phone_number: Optional[str] = None
     address: Optional[str] = None
 
 class Guest(GuestBase):
     id: int
+    orders: list[Order] = None
 
-class ConfigDict:
-    from_attributes = True
+    class ConfigDict:
+        from_attributes = True

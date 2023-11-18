@@ -5,12 +5,11 @@ from pydantic import BaseModel
 
 class PromoBase(BaseModel):
     code: str
-    menu_id: int
     discount: float
 
 
 class PromoCreate(PromoBase):
-    pass
+    menu_id: int
 
 
 class PromoUpdate(PromoBase):
