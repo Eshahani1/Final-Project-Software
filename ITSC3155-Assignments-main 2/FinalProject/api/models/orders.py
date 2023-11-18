@@ -10,8 +10,7 @@ class Order(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     guest_name = Column(String(100))
     order_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
-    order_details_id = Column(Integer, ForeignKey("order_details_id"))
-    tracking_nums = Column(Integer, ForeignKey("tracking"))
+    tracking_nums = Column(String(10), unique=True, nullable=False)
     status = Column(String(100))
 
     order_details = relationship("OrderDetail", back_populates="order")
