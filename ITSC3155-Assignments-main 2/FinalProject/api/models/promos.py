@@ -8,7 +8,7 @@ class Promo(Base):
     __tablename__ = "promos"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    code = Column(String(100))
+    code = Column(String(10))
     menu_id = Column(Integer, ForeignKey("menu.id"))
     discount = Column(Float)
 

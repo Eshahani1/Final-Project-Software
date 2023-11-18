@@ -9,6 +9,6 @@ class Payment(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     number = Column(Integer, unique=True, nullable=False)
     pin = Column(Integer, unique=True, nullable=True)
-    type = Column(String(255), nullable=False)
+    type = Column(String(5), nullable=False)
 
     guests = relationship("Guest", back_populates="payment")
