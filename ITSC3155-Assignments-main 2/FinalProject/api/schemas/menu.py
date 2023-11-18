@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
 from .resources import Resource
-from .sandwiches import Sandwich
 
 
 class MenuBase(BaseModel):
@@ -19,7 +18,6 @@ class MenuUpdate(BaseModel):
 
 class Menu(MenuBase):
     id: int
-    sandwich: Sandwich = None
 
 
     class ConfigDict:
