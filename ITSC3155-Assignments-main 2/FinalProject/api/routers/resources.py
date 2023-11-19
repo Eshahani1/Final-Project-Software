@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, FastAPI, status, Response
 from sqlalchemy.orm import Session
-from ..controllers import orders as controller
+from ..controllers import resources as controller
 from ..schemas import resources as schema
 from ..dependencies.database import engine, get_db
 
