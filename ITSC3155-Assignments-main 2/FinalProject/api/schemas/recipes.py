@@ -10,7 +10,7 @@ class RecipeBase(BaseModel):
 
 
 class RecipeCreate(RecipeBase):
-    sandwich_id: int
+    resource_id: int
     menu_id: int
 
 class RecipeUpdate(BaseModel):
