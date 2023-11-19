@@ -5,7 +5,8 @@ from .resources import Resource
 
 
 class MenuItemBase(BaseModel):
-    item: str
+    item_name: str
+    category: str
     price: float
     calories: int
 
@@ -14,7 +15,10 @@ class MenuItemCreate(MenuItemBase):
     pass
 
 class MenuItemUpdate(BaseModel):
-    id: Optional[int] = None
+    item_name: Optional[str] = None
+    category: Optional[str] = None
+    price: Optional[float] = None
+    calories: Optional[int] = None
 
 class MenuItem(MenuItemBase):
     id: int

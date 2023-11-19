@@ -7,9 +7,9 @@ class MenuItem(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     item_name = Column(String(20), unique=True, nullable=True)
+    category = Column(String(25), index=True, nullable=False)
     price = Column(DECIMAL(4, 2), index=True, nullable=False)
     calories = Column(Integer, index=True, nullable=False)
-    category = Column(String(20))
 
     recipes = relationship("Recipe", back_populates="menu_items")
     order_details = relationship("OrderDetail", back_populates="menu_items")
