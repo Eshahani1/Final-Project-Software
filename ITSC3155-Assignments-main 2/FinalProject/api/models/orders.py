@@ -9,9 +9,9 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     order_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
-    guest_id = Column(Integer, ForeignKey("guest.id"))
+    guest_id = Column(Integer, ForeignKey("guests.id"))
     tracking_nums = Column(Integer, unique=True, nullable=False)
     status = Column(String(10))
 
-    order_details = relationship("OrderDetail", back_populates="order")
-    guest = relationship("Guest", back_populates="order")
+    order_details = relationship("OrderDetail", back_populates="orders")
+    guest = relationship("Guest", back_populates="orders")

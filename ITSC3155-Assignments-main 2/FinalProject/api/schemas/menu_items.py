@@ -14,7 +14,7 @@ class MenuItemCreate(MenuItemBase):
     pass
 
 class MenuItemUpdate(BaseModel):
-    menu_id: Optional[int] = None
+    id: Optional[int] = None
 
 class MenuItem(MenuItemBase):
     id: int

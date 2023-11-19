@@ -9,19 +9,19 @@ class PromoBase(BaseModel):
 
 
 class PromoCreate(PromoBase):
-    menu_id: int
+    menu_item_id: int
 
 
 class PromoUpdate(PromoBase):
     code: Optional[str] = None
-    menu_id: Optional[int] = None
+    menu_item_id: Optional[int] = None
     discount: Optional[float] = None
 
 
 class Promo(PromoBase):
     id: int
     code: str
-    menu_id: int
+    menu_item_id: int
     discount: float
 
     class ConfigDict:

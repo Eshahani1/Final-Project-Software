@@ -5,9 +5,12 @@ from sqlalchemy.exc import SQLAlchemyError
 
 def create(db: Session, request):
     new_item = model.MenuItem(
-        menu_item_id=request.menu_item_id,
-        resource_id=request.resource_id,
-        amount=request.amount
+        id=request.id,
+        recipe_id=request.resource_id,
+        item_name=request.item_name,
+        category=request.category,
+        price=request.price,
+        calories=request.calories
     )
 
     try:
