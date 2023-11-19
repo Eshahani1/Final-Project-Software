@@ -16,6 +16,7 @@ class RecipeCreate(RecipeBase):
 class RecipeUpdate(BaseModel):
     menu_id: Optional[int] = None
     resource_id: Optional[int] = None
+    amount: Optional[int] = None
 
 class Recipe(RecipeBase):
     id: int
