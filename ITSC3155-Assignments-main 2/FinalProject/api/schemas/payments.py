@@ -10,17 +10,19 @@ class PaymentBase(BaseModel):
 
 
 class PaymentCreate(PaymentBase):
-    pass
+    guest_id: int
 
 
 class PaymentUpdate(BaseModel):
     number: Optional[int] = None
     pin: Optional[int] = None
     type: Optional[str] = None
+    guest_id: Optional[int] = None
 
 
 class Payment(PaymentBase):
     id: int
+    guest_id: int
 
     class ConfigDict:
         from_attributes = True

@@ -14,4 +14,4 @@ class Order(Base):
     status = Column(String(10))
 
     order_details = relationship("OrderDetail", back_populates="orders")
-    guest = relationship("Guest", back_populates="orders")
+    guests = relationship("Guest", back_populates="orders")
