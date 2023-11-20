@@ -8,7 +8,7 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    guest_name = Column(String(100))
+    customer_name = Column(String(100))
     order_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
     order_details_id = Column(Integer, ForeignKey("order_details_id"))
     tracking_nums = Column(Integer, ForeignKey("tracking"))
