@@ -2,8 +2,8 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from ..dependencies.database import Base
 
-class Guest(Base):
-    __tablename__ = "guests"
+class Customer(Base):
+    __tablename__ = "customers"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     name = Column(String(18), index=True, nullable=False)
@@ -13,6 +13,6 @@ class Guest(Base):
     phone_number = Column(String(20), index=True, nullable=False)
     address = Column(String(50), nullable=False)
 
-    payment = relationship("Payment", back_populates="guests")
-    order = relationship("Order", back_populates="guests")
-    promo = relationship("Promo", back_populates="guests")
+    payment = relationship("Payment", back_populates="customers")
+    order = relationship("Order", back_populates="customers")
+    promo = relationship("Promo", back_populates="customers")

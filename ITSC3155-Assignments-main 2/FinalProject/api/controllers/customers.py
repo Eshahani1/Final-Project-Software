@@ -1,11 +1,11 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
-from ..models import guests as model 
+from ..models import customers as model 
 from sqlalchemy.exc import SQLAlchemyError
 
 
 def create(db: Session, request):
-    new_guest = model.Guest(
+    new_customer = model.Customer(
         name=request.name,
         payment_id=request.payment_id,
         order_id=request.order_id,
@@ -15,56 +15,56 @@ def create(db: Session, request):
     )
 
     try:
-        db.add(new_guest)
+        db.add(new_customer)
         db.commit()
-        db.refresh(new_guest)
+        db.refresh(new_customer)
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
-    return new_guest
+    return new_customer
 
 
 def read_all(db: Session):
     try:
-        result = db.query(model.Guest).all()
+        result = db.query(model.Customer).all()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return result
 
 
-def read_one(db: Session, guest_id):
+def read_one(db: Session, customer_id):
     try:
-        guest = db.query(model.Guest).filter(model.Guest.id == guest_id).first()
-        if not guest:
+        customer = db.query(model.Customer).filter(model.Customer.id == customer_id).first()
+        if not customer:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return guest
+    return customer
 
 
-def update(db: Session, guest_id, request):
+def update(db: Session, customer_id, request):
     try:
-        guest = db.query(model.Guest).filter(model.Guest.id == guest_id)
-        if not guest.first():
+        customer = db.query(model.Customer).filter(model.Customer.id == customer_id)
+        if not customer.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
         update_data = request.dict(exclude_unset=True)
-        guest.update(update_data, synchronize_session=False)
+        customer.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return guest.first()
+    return customer.first()
 
 
-def delete(db: Session, guest_id):
+def delete(db: Session, customer_id):
     try:
-        guest = db.query(model.Guest).filter(model.Guest.id == guest_id)
-        if not guest.first():
+        customer = db.query(model.Customer).filter(model.Customer.id == customer_id)
+        if not customer.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
-        guest.delete(synchronize_session=False)
+        customer.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
