@@ -11,4 +11,4 @@ class Payment(Base):
     pin = Column(Integer, unique=True, nullable=True)
     type = Column(String(255), nullable=False)
 
-    guests = relationship("Guest", back_populates="payment")
+    guests = relationship("Guest", back_populates="payments")
