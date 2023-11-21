@@ -24,7 +24,7 @@ class MenuItemUpdate(BaseModel):
 
 class MenuItem(MenuItemBase):
     id: int
-    recipe: List[Recipe] = None
+    recipes: List[Recipe] = None
 
     class ConfigDict:
         from_attributes = True
