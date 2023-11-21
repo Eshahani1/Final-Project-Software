@@ -7,7 +7,6 @@ from sqlalchemy.exc import SQLAlchemyError
 def create(db: Session, request):
     new_guest = model.Guest(
         name=request.name,
-        payment_id=request.payment_id,
         phone_number=request.phone_number,
         address=request.address
     )
