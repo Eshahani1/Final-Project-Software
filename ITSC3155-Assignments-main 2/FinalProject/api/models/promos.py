@@ -9,7 +9,6 @@ class Promo(Base):
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     code = Column(String(10))
-    menu_item_id = Column(Integer, ForeignKey("menu_items.id"))
     discount = Column(Float)
 
-    menu_item = relationship("Item", back_populates="promos")
+    promo_details = relationship("PromoDetail", back_populates="promos")
