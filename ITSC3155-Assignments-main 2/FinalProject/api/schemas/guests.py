@@ -1,7 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel
 
-class CustomerBase(BaseModel):
+class GuestBase(BaseModel):
     name: str
     payment_id: int
     order_id: int
@@ -9,10 +9,10 @@ class CustomerBase(BaseModel):
     phone_number: str
     address: str
 
-class CustomerCreate(CustomerBase):
+class GuestCreate(GuestBase):
     pass
 
-class CustomerUpdate(BaseModel):
+class GuestUpdate(BaseModel):
     name: Optional[str] = None
     payment_id: Optional[int] = None
     order_id: Optional[int] = None
@@ -20,7 +20,7 @@ class CustomerUpdate(BaseModel):
     phone_number: Optional[str] = None
     address: Optional[str] = None
 
-class Customer(CustomerBase):
+class Guest(GuestBase):
     id: int
 
 class ConfigDict:
