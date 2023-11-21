@@ -4,9 +4,9 @@ from pydantic import BaseModel
 
 
 class PaymentBase(BaseModel):
-    number: int
+    card_number: int
     pin: int
-    type: str
+    method: str
 
 
 class PaymentCreate(PaymentBase):
@@ -14,9 +14,9 @@ class PaymentCreate(PaymentBase):
 
 
 class PaymentUpdate(BaseModel):
-    number: Optional[int] = None
+    card_number: Optional[str] = None
     pin: Optional[int] = None
-    type: Optional[str] = None
+    method: Optional[str] = None
     guest_id: Optional[int] = None
 
 

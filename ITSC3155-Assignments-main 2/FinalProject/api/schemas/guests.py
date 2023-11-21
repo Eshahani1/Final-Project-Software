@@ -23,7 +23,7 @@ class GuestUpdate(BaseModel):
 class Guest(GuestBase):
     id: int
     orders: list[Order] = None
-    payments: Payment = None
+    payments: list[Payment] = None
 
     class ConfigDict:
         from_attributes = True
