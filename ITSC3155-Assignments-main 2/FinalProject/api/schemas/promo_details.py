@@ -21,7 +21,7 @@ class PromoDetailUpdate(BaseModel):
 class PromoDetail(PromoDetailBase):
     id: int
     promo_id: int
-    guests: List[Guest] = None
+    guests: Guest = None
 
     class ConfigDict:
         from_attributes = True
