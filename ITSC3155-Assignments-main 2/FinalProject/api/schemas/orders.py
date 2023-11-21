@@ -10,7 +10,7 @@ class OrderBase(BaseModel):
 
 
 class OrderCreate(OrderBase):
-   guest_id: int
+    guest_id: int
 
 
 class OrderUpdate(BaseModel):

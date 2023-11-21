@@ -4,6 +4,7 @@ from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship, Mapped
 from ..dependencies.database import Base
 
+
 class Guest(Base):
     __tablename__ = "guests"
 

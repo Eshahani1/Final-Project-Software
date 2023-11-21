@@ -19,6 +19,7 @@ class RecipeUpdate(BaseModel):
 
 class Recipe(RecipeBase):
     id: int
+    menu_item_id: int
     resource: Resource = None
 
     class ConfigDict:

@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 from .guests import Guest
 
@@ -21,7 +21,7 @@ class PromoDetailUpdate(BaseModel):
 class PromoDetail(PromoDetailBase):
     id: int
     promo_id: int
-    Guest: Guest = None
+    guests: List[Guest] = None
 
     class ConfigDict:
         from_attributes = True

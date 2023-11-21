@@ -2,6 +2,8 @@ from sqlalchemy import Column, ForeignKey, Integer, String, Float, DECIMAL, DATE
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
+
+
 class MenuItem(Base):
     __tablename__ = "menu_items"
 

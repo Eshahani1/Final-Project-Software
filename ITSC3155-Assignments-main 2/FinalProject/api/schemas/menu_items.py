@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 from pydantic import BaseModel
 from .recipes import Recipe
 
@@ -24,7 +24,7 @@ class MenuItemUpdate(BaseModel):
 
 class MenuItem(MenuItemBase):
     id: int
-    recipe: Recipe = None
+    recipe: List[Recipe] = None
 
     class ConfigDict:
         from_attributes = True
