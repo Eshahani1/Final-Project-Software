@@ -5,22 +5,9 @@ from sqlalchemy.exc import SQLAlchemyError
 
 
 def create(db: Session, request):
-<<<<<<< HEAD:ITSC3155-Assignments-main 2/FinalProject/api/controllers/menu.py
-    new_item = model.Menu(
-        id=request.id,
-        item_name=request.item_name,
-        price=request.price,
-        calories=request.calories
-||||||| 69af943:ITSC3155-Assignments-main 2/FinalProject/api/controllers/menu.py
-    new_item = model.Menu(
-        menu_id=request.menu_id,
-        resource_id=request.resource_id,
-        amount=request.amount
-=======
     new_item = model.PromoDetail(
         promo_id=request.promo_id,
         guest_id=request.guest_id
->>>>>>> database-alteration:ITSC3155-Assignments-main 2/FinalProject/api/controllers/promo_details.py
     )
 
     try:
