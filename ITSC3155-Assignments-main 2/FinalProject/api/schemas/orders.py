@@ -4,28 +4,26 @@ from pydantic import BaseModel
 from .order_details import OrderDetail
 
 
-
 class OrderBase(BaseModel):
-    guest_name: str
-    order_date: str
-    order_details_id: int
     tracking_nums: int
     status: str
 
 
 class OrderCreate(OrderBase):
-    pass
+    guest_id: int
 
 
 class OrderUpdate(BaseModel):
-    guest_name: Optional[str] = None
-    order_date: Optional[str] = None
-    order_details_id: Optional[str] = None
-    tracking_nums: Optional[str] = None
+    guest_id: Optional[int] = None
+    tracking_num: Optional[int] = None
     status: Optional[str] = None
+
 
 class Order(OrderBase):
     id: int
+    guest_id: int
+    order_date: Optional[datetime] = None
+    order_details: list[OrderDetail] = None
 
     class ConfigDict:
         from_attributes = True

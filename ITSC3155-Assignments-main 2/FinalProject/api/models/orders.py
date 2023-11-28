@@ -8,10 +8,10 @@ class Order(Base):
     __tablename__ = "orders"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    guest_name = Column(String(100))
     order_date = Column(DATETIME, nullable=False, server_default=str(datetime.now()))
-    order_details_id = Column(Integer, ForeignKey("order_details_id"))
-    tracking_nums = Column(Integer, ForeignKey("tracking"))
-    status = Column(String(100))
+    guest_id = Column(Integer, ForeignKey("guests.id"))
+    tracking_nums = Column(Integer, unique=True, nullable=False)
+    status = Column(String(10))
 
-    order_details = relationship("OrderDetail", back_populates="order")
+    order_details = relationship("OrderDetail", back_populates="orders")
+    guests = relationship("Guest", back_populates="orders")

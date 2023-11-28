@@ -4,23 +4,25 @@ from pydantic import BaseModel
 
 
 class PaymentBase(BaseModel):
-    number: int
+    card_number: int
     pin: int
-    type: str
+    method: str
 
 
 class PaymentCreate(PaymentBase):
-    pass
+    guest_id: int
 
 
 class PaymentUpdate(BaseModel):
-    number: Optional[int] = None
+    card_number: Optional[str] = None
     pin: Optional[int] = None
-    type: Optional[str] = None
+    method: Optional[str] = None
+    guest_id: Optional[int] = None
 
 
 class Payment(PaymentBase):
     id: int
+    guest_id: int
 
     class ConfigDict:
         from_attributes = True
