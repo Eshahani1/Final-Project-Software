@@ -7,6 +7,7 @@ class PaymentBase(BaseModel):
     card_number: int
     pin: int
     method: str
+    transaction_status: str
 
 
 class PaymentCreate(PaymentBase):
@@ -18,6 +19,7 @@ class PaymentUpdate(BaseModel):
     pin: Optional[int] = None
     method: Optional[str] = None
     guest_id: Optional[int] = None
+    transaction_status: Optional[str] = None
 
 
 class Payment(PaymentBase):

@@ -8,7 +8,8 @@ def create(db: Session, request):
         card_number=request.card_number,
         guest_id=request.guest_id,
         pin=request.pin,
-        method=request.method
+        method=request.method,
+        transaction_status=request.transaction_status
     )
 
     try:

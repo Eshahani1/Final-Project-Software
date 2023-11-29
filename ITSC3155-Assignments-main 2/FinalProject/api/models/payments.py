@@ -11,6 +11,7 @@ class Payment(Base):
     card_number = Column(BIGINT, unique=True, nullable=False)
     pin = Column(Integer, unique=True, nullable=True)
     method = Column(String(5), nullable=False)
+    transaction_status = Column(String(15))
 
     guests = relationship("Guest", back_populates="payments")
 
