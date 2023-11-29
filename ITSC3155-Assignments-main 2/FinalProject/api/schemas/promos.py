@@ -7,6 +7,7 @@ from .promo_details import PromoDetail
 class PromoBase(BaseModel):
     code: str
     discount: float
+    expiration_date: datetime
 
 
 class PromoCreate(PromoBase):
@@ -16,6 +17,7 @@ class PromoCreate(PromoBase):
 class PromoUpdate(PromoBase):
     code: Optional[str] = None
     discount: Optional[float] = None
+    expiration_date: Optional[datetime] = None
 
 
 class Promo(PromoBase):

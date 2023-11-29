@@ -10,5 +10,7 @@ class Promo(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     code = Column(String(10))
     discount = Column(Float)
+    expiration_date = Column(DATETIME, nullable=False)
+    
 
     promo_details = relationship("PromoDetail", back_populates="promos")
