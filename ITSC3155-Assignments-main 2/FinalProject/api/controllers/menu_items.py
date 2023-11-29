@@ -67,3 +67,15 @@ def delete(db: Session, item_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+def read_by_category(db: Session, category: str):
+    try:
+        items = db.query(model.MenuItem).filter(model.MenuItem.category == category).all()
+        if not items:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"No items found in category {category}")
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return items
+
+
