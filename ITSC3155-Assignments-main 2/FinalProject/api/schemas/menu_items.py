@@ -6,10 +6,9 @@ from .recipes import Recipe
 
 class MenuItemBase(BaseModel):
     item_name: str
-    category: str
     price: float
     calories: int
-
+    category: str
 
 class MenuItemCreate(MenuItemBase):
     pass
