@@ -6,8 +6,9 @@ from .payments import Payment
 
 class GuestBase(BaseModel):
     name: str
-    phone_number: str
+    phone_number: int
     address: str
+    email: str
 
 
 class GuestCreate(GuestBase):
@@ -16,8 +17,9 @@ class GuestCreate(GuestBase):
 
 class GuestUpdate(BaseModel):
     name: Optional[str] = None
-    phone_number: Optional[str] = None
+    phone_number: Optional[int] = None
     address: Optional[str] = None
+    email: Optional[str] = None
 
 
 class Guest(GuestBase):

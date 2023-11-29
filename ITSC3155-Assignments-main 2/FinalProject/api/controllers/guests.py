@@ -8,7 +8,8 @@ def create(db: Session, request):
     new_guest = model.Guest(
         name=request.name,
         phone_number=request.phone_number,
-        address=request.address
+        address=request.address,
+        email=request.email
     )
 
     try:

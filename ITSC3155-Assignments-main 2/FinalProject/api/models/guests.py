@@ -12,6 +12,7 @@ class Guest(Base):
     name = Column(String(18), index=True, nullable=False)
     phone_number = Column(BIGINT, index=True, nullable=False)
     address = Column(String(50), nullable=False)
+    email = Column(String(50), index=True)
 
     payments = relationship("Payment", back_populates="guests")
     orders = relationship("Order", back_populates="guests")
