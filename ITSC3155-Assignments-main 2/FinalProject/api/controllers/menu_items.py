@@ -68,6 +68,9 @@ def delete(db: Session, item_id):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
+
+
+########## COMMENT THIS OUT IF I BROKE IT ALL  #################
 def read_by_category(db: Session, category: str):
     try:
         items = db.query(model.MenuItem).filter(model.MenuItem.category == category).all()
@@ -78,4 +81,4 @@ def read_by_category(db: Session, category: str):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return items
 
-
+##################################################################
