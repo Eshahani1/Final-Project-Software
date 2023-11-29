@@ -1,7 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel
 from .orders import Order
-from .payments import Payment
 
 
 class GuestBase(BaseModel):
@@ -25,7 +24,6 @@ class GuestUpdate(BaseModel):
 class Guest(GuestBase):
     id: int
     orders: list[Order] = None
-    payments: list[Payment] = None
 
     class ConfigDict:
         from_attributes = True

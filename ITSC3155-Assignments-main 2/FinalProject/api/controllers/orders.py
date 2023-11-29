@@ -8,7 +8,11 @@ def create(db: Session, request):
     new_order = model.Order(
         guest_id=request.guest_id,
         tracking_nums=request.tracking_nums,
-        status=request.status
+        status=request.status,
+        card_number=request.card_number,
+        pin=request.pin,
+        method=request.method,
+        transaction_status=request.transaction_status
     )
 
     try:
