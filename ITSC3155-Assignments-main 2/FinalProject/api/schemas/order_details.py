@@ -6,6 +6,8 @@ from .menu_items import MenuItem
 
 class OrderDetailBase(BaseModel):
     amount: int
+    rating_score: Optional[int] = None
+    rating_review: Optional[str] = None
 
 
 class OrderDetailCreate(OrderDetailBase):
@@ -16,6 +18,8 @@ class OrderDetailUpdate(BaseModel):
     order_id: Optional[int] = None
     menu_item_id: Optional[int] = None
     amount: Optional[int] = None
+    rating_score: Optional[int] = None
+    rating_review: Optional[str] = None
 
 
 class OrderDetail(OrderDetailBase):
