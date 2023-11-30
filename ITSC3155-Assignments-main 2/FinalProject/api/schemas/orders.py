@@ -6,7 +6,7 @@ from .order_details import OrderDetail
 
 class OrderBase(BaseModel):
     tracking_nums: int
-    status: str
+    order_status: str
     card_number: int
     pin: int
     method: str
@@ -21,7 +21,7 @@ class OrderCreate(OrderBase):
 class OrderUpdate(BaseModel):
     guest_id: Optional[int] = None
     tracking_nums: Optional[int] = None
-    status: Optional[str] = None
+    order_status: Optional[str] = None
     card_number: Optional[int] = None
     pin: Optional[int] = None
     method: Optional[str] = None
