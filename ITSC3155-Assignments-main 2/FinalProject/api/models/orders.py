@@ -17,6 +17,7 @@ class Order(Base):
     pin = Column(Integer)
     method = Column(String(10))
     transaction_status = Column(String(30))
+    order_preference = Column(String(10))
 
     order_details = relationship("OrderDetail", back_populates="orders")
     guests = relationship("Guest", back_populates="orders")

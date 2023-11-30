@@ -11,7 +11,7 @@ class OrderBase(BaseModel):
     pin: int
     method: str
     transaction_status: str
-
+    order_preference: str
 
 
 class OrderCreate(OrderBase):
@@ -26,14 +26,14 @@ class OrderUpdate(BaseModel):
     pin: Optional[int] = None
     method: Optional[str] = None
     transaction_status: Optional[str] = None
-
+    order_preference: Optional[str] = None
 
 class Order(OrderBase):
     id: int
     guest_id: int
     order_date: Optional[datetime] = None
     order_details: Optional[List[OrderDetail]] = None
-
+    order_preference: Optional[str] = None
 
     class Config:
         from_attributes = True
