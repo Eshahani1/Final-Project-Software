@@ -1,6 +1,8 @@
 from fastapi import APIRouter, Depends, FastAPI, status, Response
 from sqlalchemy.orm import Session
+from datetime import datetime
 from ..controllers import orders as controller
+from ..controllers.orders import get_orders_between_dates
 from ..schemas import orders as schema
 from ..dependencies.database import engine, get_db
 
@@ -38,3 +40,8 @@ def delete(order_id: int, db: Session = Depends(get_db)):
 @router.get("/{tracking_number}", response_model=schema.Order)
 def read_order_from_tracking_number(tracking_number: int, db: Session = Depends(get_db)):
     return controller.read_order_from_tracking_number(db, tracking_number=tracking_number)
+
+@router.get("/orders-by-date/")
+def read_orders_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
+   orders = get_orders_between_dates(db, start_date, end_date)
+   return orders
