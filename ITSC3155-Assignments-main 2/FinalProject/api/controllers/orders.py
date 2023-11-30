@@ -74,7 +74,7 @@ def delete(db: Session, order_id):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-def get_order_from_tracking_number(db: Session, tracking_number: int):
+def read_order_from_tracking_number(db: Session, tracking_number: int):
     try:
         order = db.query(model.Order).filter(model.Order.tracking_nums == tracking_number).first()
         if not order:

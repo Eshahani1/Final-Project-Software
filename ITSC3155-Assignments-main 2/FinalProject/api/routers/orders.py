@@ -36,5 +36,5 @@ def delete(order_id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/{tracking_number}", response_model=schema.Order)
-def get_order_from_tracking_number(tracking_number: int, db: Session = Depends(get_db())):
-    return controller.get_order_from_tracking_number(db, tracking_number=tracking_number)
+def read_order_from_tracking_number(tracking_number: int, db: Session = Depends(get_db)):
+    return controller.read_order_from_tracking_number(db, tracking_number=tracking_number)
