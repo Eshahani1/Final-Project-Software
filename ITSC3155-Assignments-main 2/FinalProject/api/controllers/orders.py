@@ -8,29 +8,33 @@ from ..models import promos as promo_model
 
 
 def create(db: Session, request):
-    new_order = model.Order(
-        guest_id=request.guest_id,
-        promo_id=request.promo_id,
-        tracking_nums=request.tracking_nums,
-        order_status=request.order_status,
-        card_number=request.card_number,
-        pin=request.pin,
-        method=request.method,
-        transaction_status=request.transaction_status,
-        order_preference=request.order_preference
-    )
+    current_date = datetime.now()
 
     try:
-        db.add(new_order)
-        db.commit()
+        new_order = model.Order(
+            guest_id=request.guest_id,
+            promo_id=request.promo_id,
+            tracking_nums=request.tracking_nums,
+            order_status=request.order_status,
+            card_number=request.card_number,
+            pin=request.pin,
+            method=request.method,
+            transaction_status=request.transaction_status,
+            order_preference=request.order_preference
+        )
 
         if request.promo_id:
             promo = db.query(promo_model.Promo).filter(promo_model.Promo.id == request.promo_id).first()
             if promo:
-                new_order.discount_code = promo.discount
-                db.commit()
+                if promo.expiration_date and promo.expiration_date < current_date:
+                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Promo code has expired")
 
+                new_order.discount_code = promo.discount
+                
+        db.add(new_order)
+        db.commit()
         db.refresh(new_order)
+
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
