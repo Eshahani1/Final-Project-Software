@@ -27,7 +27,7 @@ def create(db: Session, request):
         if request.promo_id:
             promo = db.query(promo_model.Promo).filter(promo_model.Promo.id == request.promo_id).first()
             if promo:
-                new_order.discount_code = promo.code
+                new_order.discount_code = promo.discount
                 db.commit()
 
         db.refresh(new_order)
