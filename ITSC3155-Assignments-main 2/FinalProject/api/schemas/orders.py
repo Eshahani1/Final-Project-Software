@@ -16,10 +16,12 @@ class OrderBase(BaseModel):
 
 class OrderCreate(OrderBase):
     guest_id: int
+    promo_id: int
 
 
 class OrderUpdate(BaseModel):
     guest_id: Optional[int] = None
+    promo_id: Optional[int] = None
     tracking_nums: Optional[int] = None
     order_status: Optional[str] = None
     card_number: Optional[int] = None
@@ -31,6 +33,7 @@ class OrderUpdate(BaseModel):
 class Order(OrderBase):
     id: int
     guest_id: int
+    promo_id: int
     order_date: Optional[datetime] = None
     order_details: Optional[List[OrderDetail]] = None
     order_preference: Optional[str] = None

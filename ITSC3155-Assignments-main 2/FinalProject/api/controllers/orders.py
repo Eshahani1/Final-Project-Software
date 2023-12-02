@@ -3,11 +3,14 @@ from fastapi import HTTPException, status, Response, Depends
 from datetime import datetime
 from ..models import orders as model
 from sqlalchemy.exc import SQLAlchemyError
+from ..models import promos as promo_model
+
 
 
 def create(db: Session, request):
     new_order = model.Order(
         guest_id=request.guest_id,
+        promo_id=request.promo_id,
         tracking_nums=request.tracking_nums,
         order_status=request.order_status,
         card_number=request.card_number,
@@ -20,6 +23,13 @@ def create(db: Session, request):
     try:
         db.add(new_order)
         db.commit()
+
+        if request.promo_id:
+            promo = db.query(promo_model.Promo).filter(promo_model.Promo.id == request.promo_id).first()
+            if promo:
+                new_order.discount_code = promo.code
+                db.commit()
+
         db.refresh(new_order)
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
