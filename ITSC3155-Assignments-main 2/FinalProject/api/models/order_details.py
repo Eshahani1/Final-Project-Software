@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, DECIMAL, DATETIME
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
@@ -13,6 +13,7 @@ class OrderDetail(Base):
     amount = Column(Integer, index=True, nullable=False)
     rating_score = Column(Integer, index=True, nullable=True)
     rating_review = Column(String(200), index=True, nullable=True)
+    cost = Column(Float)
 
     menu_items = relationship("MenuItem", back_populates="order_details")
     orders = relationship("Order", back_populates="order_details")

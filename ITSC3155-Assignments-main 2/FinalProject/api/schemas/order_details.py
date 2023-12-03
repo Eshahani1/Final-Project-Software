@@ -14,6 +14,7 @@ class OrderDetailCreate(OrderDetailBase):
     order_id: int
     menu_item_id: int
 
+
 class OrderDetailUpdate(BaseModel):
     order_id: Optional[int] = None
     menu_item_id: Optional[int] = None
@@ -26,6 +27,7 @@ class OrderDetail(OrderDetailBase):
     id: int
     order_id: int
     menu_items: MenuItem = None
+    cost: Optional[float] = None    
 
     class ConfigDict:
         from_attributes = True

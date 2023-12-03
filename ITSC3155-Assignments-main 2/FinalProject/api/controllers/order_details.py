@@ -1,6 +1,8 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import order_details as model
+from ..models import menu_items as menu_items
+from . import orders as update_cost
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -10,7 +12,8 @@ def create(db: Session, request):
         menu_item_id=request.menu_item_id,
         amount=request.amount,
         rating_score=request.rating_score,
-        rating_review=request.rating_review
+        rating_review=request.rating_review,
+        cost=get_cost(db, request.menu_item_id, request.amount)
     )
 
     try:
@@ -20,6 +23,8 @@ def create(db: Session, request):
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+    update_cost.get_total_cost(db, request.order_id)
 
     return new_item
 
@@ -50,11 +55,24 @@ def update(db: Session, item_id, request):
         if not item.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
         update_data = request.dict(exclude_unset=True)
+
+        if "amount" in update_data:
+            update_data["cost"] = get_cost(db,
+                                           db.query(model.OrderDetail).get(item_id).menu_item_id,
+                                           update_data["amount"])
+        if "menu_item_id" in update_data:
+            update_data["cost"] = get_cost(db,
+                                           update_data["menu_item_id"],
+                                           db.query(model.OrderDetail).get(menu_item_id).amount)
+
         item.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+    update_cost.get_total_cost(db,db.query(model.OrderDetail).get(item_id).order_id)
+    
     return item.first()
 
 
@@ -69,3 +87,12 @@ def delete(db: Session, item_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+def get_cost(db: Session, menu_item_id, amount):
+    try:
+        price = db.query(menu_items.MenuItem).get(menu_item_id).price   
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return price*amount
