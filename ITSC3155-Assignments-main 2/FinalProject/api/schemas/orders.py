@@ -28,12 +28,13 @@ class OrderUpdate(BaseModel):
     transaction_status: Optional[str] = None
     order_preference: Optional[str] = None
 
+
 class Order(OrderBase):
     id: int
     guest_id: int
     order_date: Optional[datetime] = None
     order_details: Optional[List[OrderDetail]] = None
-    order_preference: Optional[str] = None
+    total_cost: Optional[float] = None
 
     class Config:
         from_attributes = True

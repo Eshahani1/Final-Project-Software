@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME
+from sqlalchemy import Column, ForeignKey, Integer, String, Float, DECIMAL, DATETIME
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
@@ -12,6 +12,7 @@ class Order(Base):
     guest_id = Column(Integer, ForeignKey("guests.id"))
     tracking_nums = Column(Integer, unique=True)
     order_status = Column(String(10))
+    total_cost = Column(Float)
 
     card_number = Column(Integer, unique=True)
     pin = Column(Integer)

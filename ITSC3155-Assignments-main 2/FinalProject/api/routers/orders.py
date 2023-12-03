@@ -41,6 +41,7 @@ def delete(order_id: int, db: Session = Depends(get_db)):
 def read_order_from_tracking_number(tracking_number: int, db: Session = Depends(get_db)):
     return controller.read_order_from_tracking_number(db, tracking_number=tracking_number)
 
+
 @router.get("/orders-by-date/")
 def read_orders_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
    orders = get_orders_between_dates(db, start_date, end_date)
