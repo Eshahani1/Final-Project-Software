@@ -26,6 +26,7 @@ class OrderDetail(OrderDetailBase):
     id: int
     order_id: int
     menu_items: MenuItem = None
+    cost: Optional[float] = None  
 
     class ConfigDict:
         from_attributes = True
