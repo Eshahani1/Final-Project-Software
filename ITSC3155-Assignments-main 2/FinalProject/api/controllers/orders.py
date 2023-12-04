@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from datetime import datetime
 from ..models import orders as model
-from ..models import order_details as order_details
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -16,7 +15,7 @@ def create(db: Session, request):
         method=request.method,
         transaction_status=request.transaction_status,
         order_preference=request.order_preference,
-        total_cost=0.00
+        total_cost=0.0
     )
 
     try:
@@ -33,6 +32,11 @@ def create(db: Session, request):
 def read_all(db: Session):
     try:
         result = db.query(model.Order).all()
+        orders_dicts = []
+        for order in result:
+            order_dict = order.__dict__
+            order_dict['cost'] = order.total_cost
+            orders_dicts.append(order_dict)
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
@@ -44,6 +48,8 @@ def read_one(db: Session, order_id):
         order = db.query(model.Order).filter(model.Order.id == order_id).first()
         if not order:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
+        order_dict = order.__dict__
+        order_dict['cost'] = order.total_cost
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
@@ -93,4 +99,4 @@ def get_orders_between_dates(db: Session, start_date: datetime, end_date: dateti
 
 
 def get_total_cost(db: Session,id):
-     print(db.query(model.Order).get(id))
+    print(db.query(model.Order).get(id))

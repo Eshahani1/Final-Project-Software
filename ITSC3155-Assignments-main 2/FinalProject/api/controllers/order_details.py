@@ -71,8 +71,8 @@ def update(db: Session, item_id, request):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
 
-    update_cost.get_total_cost(db,db.query(model.OrderDetail).get(item_id).order_id)
-    
+    update_cost.get_total_cost(db, db.query(model.OrderDetail).get(item_id).order_id)
+
     return item.first()
 
 
@@ -91,8 +91,8 @@ def delete(db: Session, item_id):
 
 def get_cost(db: Session, menu_item_id, amount):
     try:
-        price = db.query(menu_items.MenuItem).get(menu_item_id).price   
+        price = db.query(menu_items.MenuItem).get(menu_item_id).price
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return price*amount
+    return price * amount
