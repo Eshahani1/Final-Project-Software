@@ -13,7 +13,7 @@ def create(db: Session, request):
     try:
         new_order = model.Order(
             guest_id=request.guest_id,
-            promo_id=request.promo_id,
+            promo_code=request.promo_code,
             tracking_nums=request.tracking_nums,
             order_status=request.order_status,
             card_number=request.card_number,
@@ -23,8 +23,8 @@ def create(db: Session, request):
             order_preference=request.order_preference
         )
 
-        if request.promo_id:
-            promo = db.query(promo_model.Promo).filter(promo_model.Promo.id == request.promo_id).first()
+        if request.promo_code:
+            promo = db.query(promo_model.Promo).filter(promo_model.Promo.code == request.promo_code).first()
             if promo:
                 if promo.expiration_date and promo.expiration_date < current_date:
                     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Promo code has expired")
