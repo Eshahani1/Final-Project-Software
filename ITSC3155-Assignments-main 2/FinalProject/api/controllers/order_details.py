@@ -55,6 +55,9 @@ def read_one(db: Session, item_id):
 
 
 def update(db: Session, item_id, request):
+
+    check_resource_availability(request.ingredients, db)
+
     try:
         item = db.query(model.OrderDetail).filter(model.OrderDetail.id == item_id)
         if not item.first():
