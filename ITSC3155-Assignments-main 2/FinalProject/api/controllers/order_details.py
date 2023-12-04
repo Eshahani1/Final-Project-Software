@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
+from datetime import datetime
 from ..models import order_details as model
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -65,6 +66,34 @@ def delete(db: Session, item_id):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
         item.delete(synchronize_session=False)
         db.commit()
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+def get_least_popular_dishes_between_dates(db: Session, start_date: datetime, end_date: datetime) ->[model.OrderDetail]:
+    try:
+        least_popular_dishes = db.query(model.OrderDetail).filter(
+            model.OrderDetail.created_at >= start_date,
+            model.OrderDetail.create_at <= end_date,
+            model.OrderDetail.rating_score <= 3
+        ).all()
+
+        return least_popular_dishes
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+def get_most_popular_dishes_between_dates(db: Session, start_date: datetime, end_date: datetime) ->[model.OrderDetail]:
+    try:
+        most_popular_dishes = db.query(model.OrderDetail).filter(
+            model.OrderDetail.created_at >= start_date,
+            model.OrderDetail.create_at <= end_date,
+            model.OrderDetail.rating_score >= 4
+        ).all()
+
+        return most_popular_dishes
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
