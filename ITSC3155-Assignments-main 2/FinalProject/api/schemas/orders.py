@@ -27,6 +27,7 @@ class OrderUpdate(BaseModel):
     method: Optional[str] = None
     transaction_status: Optional[str] = None
     order_preference: Optional[str] = None
+    total_cost: Optional[float] = None
 
 
 class Order(OrderBase):

@@ -91,6 +91,3 @@ def read_order_from_tracking_number(db: Session, tracking_number: int):
 def get_orders_between_dates(db: Session, start_date: datetime, end_date: datetime):
    return db.query(model.Order).filter(model.Order.order_date >= start_date, model.Order.order_date <= end_date).all()
 
-
-def get_total_cost(db: Session,id):
-     print(db.query(model.Order).get(id))
