@@ -3,9 +3,12 @@ from fastapi import HTTPException, status, Response, Depends
 from datetime import datetime
 from ..models import order_details as model
 from sqlalchemy.exc import SQLAlchemyError
+from .resources import check_resource_availability
 
 
 def create(db: Session, request):
+    check_resource_availability(request.ingredients, db)
+
     new_item = model.OrderDetail(
         order_id=request.order_id,
         menu_item_id=request.menu_item_id,

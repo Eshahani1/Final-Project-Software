@@ -108,3 +108,4 @@ def check_resource_availability(ingredients: list[str], db: Session):
         update_resources(db, resources)
 
 
+
