@@ -1,5 +1,6 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME
+from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME, Float, event
 from sqlalchemy.orm import relationship
+from sqlalchemy.exc import SQLAlchemyError
 from datetime import datetime
 from ..dependencies.database import Base
 
@@ -10,10 +11,11 @@ class Order(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     order_date = Column(DATETIME, server_default=str(datetime.now()))
     guest_id = Column(Integer, ForeignKey("guests.id"))
+    promo_code = Column(String(50))
+    discount_code = Column(Float, nullable=True)  
     tracking_nums = Column(Integer, unique=True)
     order_status = Column(String(10))
-
-    card_number = Column(Integer, unique=True)
+    card_number = Column(Integer)
     pin = Column(Integer)
     method = Column(String(10))
     transaction_status = Column(String(30))
@@ -21,6 +23,4 @@ class Order(Base):
 
     order_details = relationship("OrderDetail", back_populates="orders")
     guests = relationship("Guest", back_populates="orders")
-
-
-
+    
