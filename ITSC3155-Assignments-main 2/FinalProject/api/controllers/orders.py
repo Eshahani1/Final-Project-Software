@@ -6,7 +6,6 @@ from sqlalchemy.exc import SQLAlchemyError
 from ..models import promos as promo_model
 
 
-
 def create(db: Session, request):
     current_date = datetime.now()
 
@@ -20,7 +19,8 @@ def create(db: Session, request):
             pin=request.pin,
             method=request.method,
             transaction_status=request.transaction_status,
-            order_preference=request.order_preference
+            order_preference=request.order_preference,
+            total_cost=0.00
         )
 
         if request.promo_code:
@@ -98,6 +98,7 @@ def read_order_from_tracking_number(db: Session, tracking_number: int):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return order
+
 
 def get_orders_between_dates(db: Session, start_date: datetime, end_date: datetime):
    return db.query(model.Order).filter(model.Order.order_date >= start_date, model.Order.order_date <= end_date).all()

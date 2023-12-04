@@ -12,6 +12,8 @@ class OrderBase(BaseModel):
     method: str
     transaction_status: str
     order_preference: str
+    promo_code: Optional[str] = None
+    total_cost: Optional[float] = None
 
 
 class OrderCreate(OrderBase):
@@ -29,6 +31,7 @@ class OrderUpdate(BaseModel):
     method: Optional[str] = None
     transaction_status: Optional[str] = None
     order_preference: Optional[str] = None
+    total_cost: Optional[float] = None
 
 class Order(OrderBase):
     id: int
