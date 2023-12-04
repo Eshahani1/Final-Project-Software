@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, FastAPI, status, Response
 from sqlalchemy.orm import Session
+from datetime import datetime
+from typing import List
 from ..controllers import order_details as controller
 from ..schemas import order_details as schema
 from ..dependencies.database import engine, get_db
@@ -33,3 +35,13 @@ def update(item_id: int, request: schema.OrderDetailUpdate, db: Session = Depend
 @router.delete("/{item_id}")
 def delete(item_id: int, db: Session = Depends(get_db)):
     return controller.delete(db=db, item_id=item_id)
+
+
+@router.get("/least_popular_dishes", response_model=List[schema.OrderDetail])
+def get_least_popular_dishes_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
+    return controller.get_least_popular_dishes_between_dates(db, start_date, end_date)
+
+
+@router.get("/most_popular_dishes", response_model=List[schema.OrderDetail])
+def get_most_popular_dishes_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
+    return controller.get_most_popular_dishes_between_dates(db, start_date, end_date)
