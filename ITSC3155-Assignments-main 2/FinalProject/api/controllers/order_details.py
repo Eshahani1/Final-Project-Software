@@ -145,17 +145,16 @@ def get_total_order_cost(db: Session, order_id):
                 total_order_cost += detail.cost
                 
         discount_code = update_cost.get_discount(db, order_id)
-        print(discount_code)
         
-        if discount_code:
+        if discount_code: 
             total_order_cost *= (1 - discount_code)
-            
+
         order_update_object = order.OrderUpdate(
             total_cost=total_order_cost
         )
-        
+
         update_cost.update(db, order_id, order_update_object)
-        
+
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
