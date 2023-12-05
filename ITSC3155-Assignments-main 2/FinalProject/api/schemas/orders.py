@@ -18,7 +18,6 @@ class OrderBase(BaseModel):
 
 class OrderCreate(OrderBase):
     guest_id: int
-    promo_code: str
 
 
 class OrderUpdate(BaseModel):

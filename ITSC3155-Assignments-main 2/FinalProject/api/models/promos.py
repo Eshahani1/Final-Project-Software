@@ -11,6 +11,3 @@ class Promo(Base):
     code = Column(String(50), primary_key=True, index=True)
     discount = Column(Float)
     expiration_date = Column(DATETIME, nullable=False)
-    
-
-    promo_details = relationship("PromoDetail", back_populates="promos")
