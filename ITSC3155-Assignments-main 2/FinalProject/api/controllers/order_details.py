@@ -6,7 +6,7 @@ from ..models import menu_items as menu_items
 from . import orders as update_cost
 from ..schemas import orders as order
 from sqlalchemy.exc import SQLAlchemyError
-from .resources import check_resource_availability
+from . import resources
 
 
 def create(db: Session, request):
@@ -55,9 +55,6 @@ def read_one(db: Session, item_id):
 
 
 def update(db: Session, item_id, request):
-
-    check_resource_availability(request.ingredients, db)
-
     try:
         item = db.query(model.OrderDetail).filter(model.OrderDetail.id == item_id)
         if not item.first():
@@ -72,6 +69,8 @@ def update(db: Session, item_id, request):
             update_data["cost"] = get_cost(db,
                                            update_data["menu_item_id"],
                                            db.query(model.OrderDetail).get(menu_item_id).amount)
+
+        resources.check_resource_availability(request.ingredients, db)
 
         item.update(update_data, synchronize_session=False)
         db.commit()
@@ -136,6 +135,7 @@ def get_cost(db: Session, menu_item_id, amount):
 
 
 def get_total_order_cost(db: Session, order_id):
+    print("updating cost")
     try:
         total_order_cost = 0.00
         

@@ -39,7 +39,6 @@ class Order(OrderBase):
     guest_id: int
     order_date: Optional[datetime] = None
     order_details: Optional[List[OrderDetail]] = None
-    order_preference: Optional[str] = None
 
     class Config:
         from_attributes = True

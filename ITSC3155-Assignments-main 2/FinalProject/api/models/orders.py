@@ -11,7 +11,7 @@ class Order(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     order_date = Column(DATETIME, server_default=str(datetime.now()))
     guest_id = Column(Integer, ForeignKey("guests.id"))
-    promo_code = Column(String(50), index=True, nullable=True)
+    promo_code = Column(String(50), nullable=True)
     tracking_nums = Column(Integer, unique=True)
     order_status = Column(String(10))
     card_number = Column(Integer)
