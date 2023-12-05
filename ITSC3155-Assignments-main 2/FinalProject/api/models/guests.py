@@ -15,4 +15,3 @@ class Guest(Base):
     email = Column(String(50), index=True)
 
     orders = relationship("Order", back_populates="guests")
-    promo_details = relationship("PromoDetail", back_populates="guests")
