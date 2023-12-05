@@ -41,8 +41,12 @@ def delete(order_id: int, db: Session = Depends(get_db)):
 def read_order_from_tracking_number(tracking_number: int, db: Session = Depends(get_db)):
     return controller.read_order_from_tracking_number(db, tracking_number=tracking_number)
 
-@router.get("/orders-by-date/")
-def read_orders_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
-   orders = get_orders_between_dates(db, start_date, end_date)
-   return orders
 
+@router.get("/orders-by-date/", response_model=list[schema.Order])
+def read_orders_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
+    return get_orders_between_dates(db, start_date, end_date)
+
+
+@router.get("/orders-by-date/", response_model=float)
+def read_revenue_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
+    return get_revenue_between_dates(db, start_date, end_date)
