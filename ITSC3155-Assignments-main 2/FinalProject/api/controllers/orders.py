@@ -102,3 +102,12 @@ def read_order_from_tracking_number(db: Session, tracking_number: int):
 
 def get_orders_between_dates(db: Session, start_date: datetime, end_date: datetime):
    return db.query(model.Order).filter(model.Order.order_date >= start_date, model.Order.order_date <= end_date).all()
+
+def get_discount_code(db: Session, order_id):
+    try:
+        order = db.query(model.Order).filter(model.Order.id == order_id).first()
+        if order:
+            return order.discount_code
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
