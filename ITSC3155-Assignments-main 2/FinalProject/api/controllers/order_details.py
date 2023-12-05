@@ -10,7 +10,7 @@ from . import resources
 
 
 def create(db: Session, request):
-    #check_resource_availability(request.ingredients, db)
+    resources.check_resource_availability(request.ingredients, db)
 
     new_item = model.OrderDetail(
         order_id=request.order_id,
