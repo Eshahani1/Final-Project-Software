@@ -100,7 +100,7 @@ def get_least_popular_dishes_between_dates(db: Session, start_date: datetime, en
     try:
         least_popular_dishes = db.query(model.OrderDetail).filter(
             model.OrderDetail.created_at >= start_date,
-            model.OrderDetail.create_at <= end_date,
+            model.OrderDetail.created_at <= end_date,
             model.OrderDetail.rating_score <= 3
         ).all()
 
@@ -114,7 +114,7 @@ def get_most_popular_dishes_between_dates(db: Session, start_date: datetime, end
     try:
         most_popular_dishes = db.query(model.OrderDetail).filter(
             model.OrderDetail.created_at >= start_date,
-            model.OrderDetail.create_at <= end_date,
+            model.OrderDetail.created_at <= end_date,
             model.OrderDetail.rating_score >= 4
         ).all()
 
