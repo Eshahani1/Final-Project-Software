@@ -10,7 +10,7 @@ from . import resources
 
 
 def create(db: Session, request):
-    resources.check_resource_availability(request.ingredients, db)
+    ##resources.check_resource_availability(request.ingredients, db)
 
     new_item = model.OrderDetail(
         order_id=request.order_id,
@@ -70,7 +70,7 @@ def update(db: Session, item_id, request):
                                            update_data["menu_item_id"],
                                            db.query(model.OrderDetail).get(menu_item_id).amount)
 
-        resources.check_resource_availability(request.ingredients, db)
+        ##resources.check_resource_availability(request.ingredients, db)
 
         item.update(update_data, synchronize_session=False)
         db.commit()
