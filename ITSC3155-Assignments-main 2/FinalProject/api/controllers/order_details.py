@@ -10,7 +10,7 @@ from .resources import check_resource_availability
 
 
 def create(db: Session, request):
-    check_resource_availability(request.ingredients, db)
+    #check_resource_availability(request.ingredients, db)
 
     new_item = model.OrderDetail(
         order_id=request.order_id,
@@ -142,6 +142,9 @@ def get_total_order_cost(db: Session, order_id):
         for detail in all_order_details:
             if detail.order_id == order_id:
                 total_order_cost += detail.cost
+        discount_code = update_cost.get_discount_code(db, order_id)
+        if discount_code:
+            total_order_cost *= (1 - discount_code / 100)
         order_update_object = order.OrderUpdate(
             total_cost=total_order_cost
         )
@@ -149,3 +152,5 @@ def get_total_order_cost(db: Session, order_id):
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+
