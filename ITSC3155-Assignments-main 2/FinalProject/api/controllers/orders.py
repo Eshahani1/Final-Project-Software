@@ -4,11 +4,10 @@ from datetime import datetime
 from ..models import orders as model
 from sqlalchemy.exc import SQLAlchemyError
 from ..models import promos as promo_model
+from . import order_details as update_cost
 
 
 def create(db: Session, request):
-    current_date = datetime.now()
-
     try:
         new_order = model.Order(
             guest_id=request.guest_id,
@@ -22,14 +21,8 @@ def create(db: Session, request):
             order_preference=request.order_preference,
             total_cost=0.00
         )
-
-        if request.promo_code:
-            promo = db.query(promo_model.Promo).filter(promo_model.Promo.code == request.promo_code).first()
-            if promo:
-                if promo.expiration_date and promo.expiration_date < current_date:
-                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Promo code has expired")
-
-                new_order.discount_code = promo.discount
+        
+        check_promo_code(db,request.promo_code)        
                 
         db.add(new_order)
         db.commit()
@@ -70,12 +63,8 @@ def update(db: Session, order_id, request):
         update_data = request.dict(exclude_unset=True)
 
         if "promo_code" in update_data:
-            promo = db.query(promo_model.Promo).filter(promo_model.Promo.code == request.promo_code).first()
-            if promo:
-                if promo.expiration_date and promo.expiration_date < current_date:
-                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Promo code has expired")
-
-                new_order.discount_code = promo.discount
+            check_promo_code(db, update_data["promo_code"])
+            update_cost.get_total_order_cost(db, order_id)
 
         order.update(update_data, synchronize_session=False)
         db.commit()
@@ -113,11 +102,15 @@ def get_orders_between_dates(db: Session, start_date: datetime, end_date: dateti
    return db.query(model.Order).filter(model.Order.order_date >= start_date, model.Order.order_date <= end_date).all()
 
 
-def get_discount_code(db: Session, order_id):
+def get_discount(db: Session, order_id):
     try:
         order = db.query(model.Order).filter(model.Order.id == order_id).first()
         if order:
-            return order.discount_code
+            promo_code = order.promo_code
+            promo = db.query(promo_model.Promo).filter(promo_model.Promo.code == promo_code).first()
+            return promo.discount
+        else:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found!")
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
@@ -130,4 +123,20 @@ def get_revenue_between_dates(db: Session, start_date: datetime, end_date: datet
         revenue += order.total_cost
     return revenue
         
+        
+def check_promo_code(db: Session, promo_code):
+    try:
+        current_date = datetime.now()
+    
+        if promo_code:
+            promo = db.query(promo_model.Promo).filter(promo_model.Promo.code == promo_code).first()
+            if promo:
+                if promo.expiration_date and promo.expiration_date < current_date:
+                    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Promo code has expired")
+        else:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Promo code not found!")
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
     
