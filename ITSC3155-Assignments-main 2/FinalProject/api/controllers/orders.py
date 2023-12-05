@@ -9,6 +9,9 @@ from . import order_details as update_cost
 
 def create(db: Session, request):
     try:
+        if request.promo_code:
+            check_promo_code(db, request.promo_code)
+        
         new_order = model.Order(
             guest_id=request.guest_id,
             promo_code=request.promo_code,
@@ -21,9 +24,7 @@ def create(db: Session, request):
             order_preference=request.order_preference,
             total_cost=0.00
         )
-        
-        check_promo_code(db,request.promo_code)        
-                
+
         db.add(new_order)
         db.commit()
         db.refresh(new_order)
@@ -61,11 +62,9 @@ def update(db: Session, order_id, request):
         if not order.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
         update_data = request.dict(exclude_unset=True)
-
         if "promo_code" in update_data:
             check_promo_code(db, update_data["promo_code"])
             update_cost.get_total_order_cost(db, order_id)
-
         order.update(update_data, synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
@@ -79,6 +78,9 @@ def delete(db: Session, order_id):
         order = db.query(model.Order).filter(model.Order.id == order_id)
         if not order.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Id not found!")
+        details = list(filter(lambda detail: detail.order_id == order_id, update_cost.read_all(db)))
+        for detail in details:
+            update_cost.delete(db,detail.id)
         order.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
@@ -108,7 +110,8 @@ def get_discount(db: Session, order_id):
         if order:
             promo_code = order.promo_code
             promo = db.query(promo_model.Promo).filter(promo_model.Promo.code == promo_code).first()
-            return promo.discount
+            if promo:
+                return promo.discount
         else:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found!")
     except SQLAlchemyError as e:
@@ -127,14 +130,14 @@ def get_revenue_between_dates(db: Session, start_date: datetime, end_date: datet
 def check_promo_code(db: Session, promo_code):
     try:
         current_date = datetime.now()
-    
+
         if promo_code:
             promo = db.query(promo_model.Promo).filter(promo_model.Promo.code == promo_code).first()
             if promo:
                 if promo.expiration_date and promo.expiration_date < current_date:
                     raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Promo code has expired")
-        else:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Promo code not found!")
+            else:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Promo code not found!")
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
