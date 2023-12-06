@@ -10,7 +10,7 @@ from . import resources
 
 
 def create(db: Session, request):
-    ##resources.check_resource_availability(request.ingredients, db)
+    # resources.check_resource_availability(request.ingredients, db)\
 
     new_item = model.OrderDetail(
         order_id=request.order_id,
@@ -96,33 +96,20 @@ def delete(db: Session, item_id):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-def get_least_popular_dishes_between_dates(db: Session, start_date: datetime, end_date: datetime) ->[model.OrderDetail]:
+def get_least_popular_dishes(db: Session):
     try:
-        least_popular_dishes = db.query(model.OrderDetail).filter(
-            model.OrderDetail.created_at >= start_date,
-            model.OrderDetail.created_at <= end_date,
-            model.OrderDetail.rating_score <= 3
-        ).all()
-
-        return least_popular_dishes
+        return db.query(model.OrderDetail).filter(model.OrderDetail.rating_score <= 3).all()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-def get_most_popular_dishes_between_dates(db: Session, start_date: datetime, end_date: datetime) ->[model.OrderDetail]:
+
+def get_most_popular_dishes(db: Session):
     try:
-        most_popular_dishes = db.query(model.OrderDetail).filter(
-            model.OrderDetail.created_at >= start_date,
-            model.OrderDetail.created_at <= end_date,
-            model.OrderDetail.rating_score >= 4
-        ).all()
-
-        return most_popular_dishes
+        return db.query(model.OrderDetail).filter(model.OrderDetail.rating_score >= 4).all()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 def get_cost(db: Session, menu_item_id, amount):
@@ -135,7 +122,6 @@ def get_cost(db: Session, menu_item_id, amount):
 
 
 def get_total_order_cost(db: Session, order_id):
-    print("updating cost")
     try:
         total_order_cost = 0.00
         
