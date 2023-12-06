@@ -37,11 +37,11 @@ def delete(item_id: int, db: Session = Depends(get_db)):
     return controller.delete(db=db, item_id=item_id)
 
 
-@router.get("/least_popular_dishes", response_model=List[schema.OrderDetail])
-def get_least_popular_dishes_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
-    return controller.get_least_popular_dishes_between_dates(db, start_date, end_date)
+@router.get("/least_popular_dishes/")
+def get_least_popular_dishes(db: Session = Depends(get_db)):
+    return controller.get_least_popular_dishes(db)
 
 
-@router.get("/most_popular_dishes", response_model=List[schema.OrderDetail])
-def get_most_popular_dishes_between_dates(start_date: datetime, end_date: datetime, db: Session = Depends(get_db)):
-    return controller.get_most_popular_dishes_between_dates(db, start_date, end_date)
+@router.get("/most_popular_dishes/", response_model=List[schema.OrderDetail])
+def get_most_popular_dishes(db: Session = Depends(get_db)):
+    return controller.get_most_popular_dishes(db)
