@@ -66,3 +66,29 @@ def delete(db: Session, item_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+def get_resource_ids(db: Session, menu_item_id):
+    try:
+        recipies = list(filter(lambda recipe: recipe.menu_item_id == menu_item_id, read_all(db)))
+        resources = []
+        for recipe in recipies:
+            resources.append(recipe.resource_id)
+
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return resources
+
+
+def get_resource_amount_needed(db: Session, menu_item_id, num_of_orders):
+    try:
+        recipies = list(filter(lambda recipe: recipe.menu_item_id == menu_item_id, read_all(db)))
+        amount_of_ingredients = []
+        for recipe in recipies:
+            amount_of_ingredients.append(recipe.amount * num_of_orders)
+
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return amount_of_ingredients

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import resources as model
+from ..schemas import resources as resources_schema
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -68,44 +69,14 @@ def delete(db: Session, item_id):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
-def update_resources(db: Session, updated_resources):
-        try:
-
-            resources_row = db.query(model.Resource).first()
-            if not resources_row:
-                raise HTTPException(status_code=404, detail="Information not found")
-
-            for key, value in updated_resources.items():
-                setattr(resources_row, key, value)
-
-            db.commit()
-        except SQLAlchemyError as e:
-            error = str(e.__dict__['orig'])
-            raise HTTPException(status_code=400, detail=error)
-
-
-def get_available_resources(db: Session):
+def update_resources(db: Session, resource_ids: list[int], amounts_needed: list[int]):
     try:
-        resources = db.query(model.Resource).first()
-        if not resources:
-            raise HTTPException(status_code=404, detail="Information not found")
+        for x in range(len(resource_ids)):
+            resource = db.query(model.Resource).filter(model.Resource.id == resource_ids[x]).first()
+            if not resource:
+                raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Resource not found!")
+            if amounts_needed[x] > resource.amount:
+                raise HTTPException(status_code=400, detail=f"Not enough {resource.item} available")
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=400, detail=error)
-
-    return resources
-
-def check_resource_availability(ingredients: list[str], db: Session):
-        resources = get_available_resources(db)
-
-        for ingredient in ingredients:
-            if ingredient not in resources or resources[ingredient] <= 0:
-                raise HTTPException(status_code=400, detail=f"Not enough {ingredient} available")
-
-        for ingredient in ingredients:
-            resources[ingredient] -= 1
-
-        update_resources(db, resources)
-
-
-
